@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sign In</h1>
+<form action="/test" method="post" >
+    {{form.username.label}}<br>
+    {{form.username(size=32)}}<br>
+    <p><input type="submit" value="Sign In"></p>
+</form>
+{% endblock %}

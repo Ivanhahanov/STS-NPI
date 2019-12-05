@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="col col-lg-4">
+    <h1>Registry Legal Data</h1>
+    <form class="form-group" method="post">
+        {{form.full_name.label}}<br>
+        {{form.full_name}}<br>
+        {{form.short_name.label}}<br>
+        {{form.short_name}}<br>
+        {{form.company_name.label}}<br>
+        {{form.company_name}}<br>
+        {{form.INN.label}}<br>
+        {{form.INN}}<br>
+        {{form.OGRN.label}}<br>
+        {{form.OGRN}}<br>
+        {{form.legal_address.label}}<br>
+        {{form.legal_address}}<br>
+        {{form.real_address.label}}<br>
+        {{form.real_address}}<br>
+        {{form.index.label}}<br>
+        {{form.index}}<br>
+        {{form.tax_number.label}}<br>
+        {{form.tax_number}}<br>
+        {{form.tax_date.label}}<br>
+        {{form.tax_date}}<br>
+        <p><input type="submit" value="Sign In"></p>
+    </form>
+    {% for field, errors in form.errors.items() %}
+    <div class="alert alert-error">
+        {{ form[field].label }}: {{ ', '.join(errors) }}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

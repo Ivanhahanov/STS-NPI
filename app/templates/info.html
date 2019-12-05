@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <h2>User</h2>
+        <table class="table table-hover">
+
+            <tbody>
+            {% set user = info['user'] %}
+            <tr>
+                <th scope="row">Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th scope="row">eMail</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ user.legalentity.INN }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <h2>Legal Entity</h2>
+        <table class="table table-hover">
+            <tbody>
+            {% set legal = info['legal']%}
+            <tr>
+                <th scope="row">INN</th>
+                <td>{{ legal.INN}}</td>
+            </tr>
+            <tr>
+                <th scope="row">License</th>
+                <td>{{ legal.license.license_number}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-5">
+        <table class="table table-hover">
+            <h2>Contracts</h2>
+            <tbody>
+
+            {% for index, contract in info.contract%}
+            <tr  onclick="window.location='/contract/{{contract.contract_number}}';">
+                <th scope="row">{{index}}</th>
+                <td>{{ contract.contract_number}}<br></td>
+                <td>{{ contract.organization}}<br></td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <h2>License</h2>
+    {% set license = info['license']%}
+    {{ license.license_number}}<br>
+</div>
+<div>
+    <h2>Contract</h2>
+    {% for contract in info.contract%}
+    {{ contract.contract_number}}<br>
+    {{ contract.organization}}<br>
+
+    {% for appendix in info.appendix%}
+    {{ appendix.appendix_number}}<br>
+    {{ appendix.file}}<br>
+    {% endfor%}
+
+    {% for addition in info.addition%}
+    {{ addition.addition_number}}<br>
+    {{ addition.file}}<br>
+    {% endfor%}
+    {% endfor%}
+</div>
+<div>
+    <h2>License</h2>
+    {% set license = info['license']%}
+    {{ license.license_number}}<br>
+</div>
+{% endblock %}

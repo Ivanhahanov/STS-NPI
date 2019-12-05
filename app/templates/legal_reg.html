@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col col-lg-2">
+<h1>Sign In</h1>
+<form method="post" >
+    {{form.first_name.label}}<br>
+    {{form.first_name(required='required')}}<br>
+    {{form.last_name.label}}<br>
+    {{form.last_name(required='required')}}<br>
+    {{form.surname.label}}<br>
+    {{form.surname(required='required')}}<br>
+    <p><input type="submit" value="Sign In"></p>
+</form>
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-error">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
+</div>
+{% endblock %}

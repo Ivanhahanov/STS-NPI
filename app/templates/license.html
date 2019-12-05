@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sign In</h1>
+<form method="post" >
+    {{form.license_number.label}}<br>
+    {{form.license_number}}<br>
+    {{form.issued_by.label}}<br>
+    {{form.issued_by}}<br>
+    {{form.license_file.label}}<br>
+    {{form.license_file}}<br>
+    {{form.license_date.label}}<br>
+    {{form.license_date}}<br>
+    <p><input type="submit" value="Sign In"></p>
+</form>
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-error">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Registry</h1>
+<form method="post" >
+    {{form.username.label}}<br>
+    {{form.username}}<br>
+    {{form.email.label}}<br>
+    {{form.email}}<br>
+    {{form.password.label}}<br>
+    {{form.password}}<br>
+    {{form.confirm.label}}<br>
+    {{form.confirm}}<br>
+    <p><input type="submit" value="Sign In"></p>
+</form>
+{% for field, errors in form.errors.items() %}
+<div class="alert alert-error">
+    {{ form[field].label }}: {{ ', '.join(errors) }}
+</div>
+{% endfor %}
+{% endblock %}
