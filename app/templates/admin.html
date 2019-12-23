@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+<div class="row">
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+                {% for link, name in data.links %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{{link}}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  {{name}} <span class="sr-only">(current)</span>
+                </a>
+              </li>
+             {% endfor %}
+            </ul>
+          </div>
+        </nav>
+    <div class="col-md-5">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Company name</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for index, user in data.users %}
+<tr  onclick="window.location='/edit_user';">
+    <th>{{index}}</th>
+    <td>{{user.username}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.legalentity.short_name}}</td>
+</tr>
+{% endfor %}
+
+  </tbody>
+</table>
+</div>
+    </div>
+{% endblock %}

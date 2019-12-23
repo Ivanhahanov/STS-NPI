@@ -3,6 +3,8 @@ from app import db, app
 from flask import redirect, url_for, abort, render_template, flash, request
 
 
+
+
 # head = Head(firstname='i',
 #             secondname='w',
 #             lastname='v')

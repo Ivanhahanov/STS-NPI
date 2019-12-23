@@ -8,19 +8,14 @@
 
             <tbody>
             {% set user = info['user'] %}
-            <tr>
+            <tr  onclick="window.location='/edit_user';">
                 <th scope="row">Username</th>
                 <td>{{ user.username }}</td>
             </tr>
-            <tr>
+            <tr  onclick="window.location='/edit_user';">
                 <th scope="row">eMail</th>
                 <td>{{ user.email }}</td>
             </tr>
-            <tr>
-                <th scope="row">1</th>
-                <td>{{ user.legalentity.INN }}</td>
-            </tr>
-
             </tbody>
         </table>
         <br>
@@ -28,14 +23,38 @@
         <h2>Legal Entity</h2>
         <table class="table table-hover">
             <tbody>
-            {% set legal = info['legal']%}
-            <tr>
+            {% set legal = info['legal'] %}
+            <tr onclick="window.location='/edit_user';">
                 <th scope="row">INN</th>
                 <td>{{ legal.INN}}</td>
             </tr>
-            <tr>
+            <tr onclick="window.location='/edit_user';">
+                <th scope="row">Full Name</th>
+                <td>{{ legal.full_name}}</td>
+            </tr>
+            <tr onclick="window.location='/edit_user';">
+                <th scope="row">Short Name</th>
+                <td>{{ legal.short_name}}</td>
+            </tr>
+            <tr onclick="window.location='/edit_user';">
+                <th scope="row">Company Name</th>
+                <td>{{ legal.company_name}}</td>
+            </tr>
+            <tr onclick="window.location='/edit_user';">
+                <th scope="row">OGRN</th>
+                <td>{{ legal.OGRN}}</td>
+            </tr>
+            <tr onclick="window.location='/edit_user';">
+                <th scope="row">Legal Address</th>
+                <td>{{ legal.legal_address}}</td>
+            </tr>
+            <tr onclick="window.location='/edit_user';">
+                <th scope="row">Real Address</th>
+                <td>{{ legal.real_address}}</td>
+            </tr>
+            <tr onclick="window.location='/edit_user';">
                 <th scope="row">License</th>
-                <td>{{ legal.license.license_number}}</td>
+                <td>{{ legal.license_number}}</td>
             </tr>
             </tbody>
         </table>
@@ -57,31 +76,31 @@
     </div>
 </div>
 
-<div>
-    <h2>License</h2>
-    {% set license = info['license']%}
-    {{ license.license_number}}<br>
-</div>
-<div>
-    <h2>Contract</h2>
-    {% for contract in info.contract%}
-    {{ contract.contract_number}}<br>
-    {{ contract.organization}}<br>
-
-    {% for appendix in info.appendix%}
-    {{ appendix.appendix_number}}<br>
-    {{ appendix.file}}<br>
-    {% endfor%}
-
-    {% for addition in info.addition%}
-    {{ addition.addition_number}}<br>
-    {{ addition.file}}<br>
-    {% endfor%}
-    {% endfor%}
-</div>
-<div>
-    <h2>License</h2>
-    {% set license = info['license']%}
-    {{ license.license_number}}<br>
-</div>
+<!--<div>-->
+<!--    <h2>License</h2>-->
+<!--    {% set license = info['license']%}-->
+<!--    {{ license.license_number}}<br>-->
+<!--</div>-->
+<!--<div>-->
+<!--    <h2>Contract</h2>-->
+<!--    {% for contract in info.contract%}-->
+<!--    {{ contract.contract_number}}<br>-->
+<!--    {{ contract.organization}}<br>-->
+<!--    appendix-->
+<!--    {% for appendix in info.appendix%}-->
+<!--    {{ appendix.appendix_number}}<br>-->
+<!--    {{ appendix.file}}<br>-->
+<!--    {% endfor%}-->
+<!--    addition-->
+<!--    {% for addition in info.addition%}-->
+<!--    {{ addition.addition_number}}<br>-->
+<!--    {{ addition.file}}<br>-->
+<!--    {% endfor%}-->
+<!--    {% endfor%}-->
+<!--</div>-->
+<!--<div>-->
+<!--    <h2>License</h2>-->
+<!--    {% set license = info['license']%}-->
+<!--    {{ license.license_number}}<br>-->
+<!--</div>-->
 {% endblock %}
