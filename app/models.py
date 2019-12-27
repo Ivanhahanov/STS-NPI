@@ -73,11 +73,6 @@ class Employee(db.Model):
     employee_FIO = db.Column(db.String())
     legalentity = db.Column(db.BigInteger, db.ForeignKey('legalentity.INN'))
 
-
-
-
-
-
 class Executor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     FIO_executor = db.Column(db.String(64))
@@ -131,3 +126,19 @@ class SupplementaryDocument(db.Model):
     document_name = db.Column(db.String)
     document = db.Column(db.String)
     technical_doc = db.Column(db.BigInteger, db.ForeignKey('technical_document.passport_code'))
+
+class Timeline(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    img = db.Column(db.String)
+    date = db.Column(db.String)
+    title = db.Column(db.String)
+    text = db.Column(db.Text)
+
+class Team(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    photo = db.Column(db.String, default='static/img/team/default.jpg')
+    name = db.Column(db.String)
+    role = db.Column(db.String)
+    vk = db.Column(db.String)
+    insta = db.Column(db.String)
+    git = db.Column(db.String)

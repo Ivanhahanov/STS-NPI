@@ -1,102 +1,112 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block content %}
-<div class="row justify-content-md-center">
-    <div class="col-10">
-        <div class="card mb-4 shadow">
-            <div class="card-header">
-                Statement
-            </div>
-            <div class="card-body">
-                <div class="row justify-content-end">
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-10">
+            <div class="card mb-4 shadow">
+                <div class="card-header">
+                    Statement
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-end">
 
-                    <div class="col col-lg-3">
-                        <ul class="list-group list-group-flush">
+                        <div class="col col-lg-3">
+                            <ul class="list-group list-group-flush">
 
-                            <li class="list-group-item">Кому: {{info.executor.FIO_executor}}</li>
-                            <li class="list-group-item">Должность: {{info.executor.position}}</li>
-                            <li class="list-group-item">Почта: {{info.executor.mail_address}}</li>
-                        </ul>
+                                <li class="list-group-item">Кому: {{info.executor.FIO_executor}}</li>
+                                <li class="list-group-item">Должность: {{info.executor.position}}</li>
+                                <li class="list-group-item">Почта: {{info.executor.mail_address}}</li>
+                            </ul>
+                        </div>
                     </div>
+                    <div class="text-center"><h2>Заявление</h2></div>
+                    <br>
+                    <p class="card-text"></p>
+                    <div class="list-group">
+
+                        <a href="{{ url_for('change_legal') }}"
+                           class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Полное, фирменное и сокращенное наименования юридического лица</h5>
+                                <small class="text-muted">{% if info.legal.integrety %}ok{% else %}false{% endif %}</small>
+                            </div>
+                            <p class="mb-1">{{info.legal.full_name}}</p>
+                            <p class="mb-1">{{info.legal.short_name}}</p>
+                            <p class="mb-1">{{info.legal.company_name}}</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                        <a href="{{ url_for('change_license') }}"
+                           class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Сведения о лицензии на осуществление деятельности в области оборота СТС
+                                    НПИ</h5>
+                                <small class="text-muted">edit</small>
+                            </div>
+                            <p class="mb-1">Номер: {{info.license_info.license_number}}</p>
+                            <p class="mb-1">Организация выдавшая лицензию: "{{info.license_info.organization}}"</p>
+                            <small class="text-muted">Выдана: {{info.license_info.date.date()}}</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">ФИО руководителя юридического лица</h5>
+                                <small class="text-muted">edit</small>
+                            </div>
+                            <p class="mb-1">{{info.employee_head.employee_FIO}}</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1 ">Наименование СТС НПИ</h5>
+                                <small class="text-muted">edit</small>
+                            </div>
+                            <p class="mb-1">{{info.enter_statement.classification.code}}
+                                {{info.enter_statement.classification.code_name}}</p>
+                            <p class="mb-1">{{info.enter_statement.classification.code}}
+                                {{info.enter_statement.classification.code_name}}</p>
+                            <p class="mb-1">{{info.enter_statement.classification.code}}
+                                {{info.enter_statement.classification.code_name}}</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                        <a href="{{ url_for('change_expertise') }}"
+                           class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Сведения о заключении экспертизы образцов СТС НПИ</h5>
+                                <small class="text-muted">edit</small>
+                            </div>
+                            <p class="mb-1">Адресс: {{info.enter_statement.expertise.address}}</p>
+                            <p class="mb-1">Название организации:
+                                {{info.enter_statement.expertise.organization_name}}</p>
+                            <p class="mb-1">Имя эксперта: {{info.enter_statement.expertise.expert_FIO}}</p>
+                            <small class="text-muted">Номер экспертизы
+                                {{info.enter_statement.expertise.expertise_number}}</small>
+                        </a>
+                        <a href="{{ url_for('change_legal') }}"
+                           class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Юридический и фактический адрес</h5>
+                                <small class="text-muted">edit</small>
+                            </div>
+                            <p class="mb-1">{{info.legal.legal_address}}</p>
+                            <p class="mb-1">{{info.legal.legal_address}}</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Для взаимодействия с ЦЛСЗ ФСБ России выделен</h5>
+                                <small class="text-muted"><font color="green">ok</font> </small>
+                            </div>
+                            <p class="mb-1">{{info.employee.employee_FIO}}</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                        <p></p>
+                        <button type="button" class="btn ">Primary</button>
+                    </div>
+
+
                 </div>
-                <div class="text-center"><h2>Заявление</h2></div><br>
-                <p class="card-text"></p>
-                <div class="list-group">
-
-                    <a href="{{ url_for('change_legal') }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Полное, фирменное и сокращенное наименования юридического лица</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">{{info.legal.full_name}}</p>
-                        <p class="mb-1">{{info.legal.short_name}}</p>
-                        <p class="mb-1">{{info.legal.company_name}}</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="{{ url_for('change_license') }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Сведения о лицензии на осуществление деятельности в области оборота СТС
-                                НПИ</h5>
-                            <small class="text-muted">edit</small>
-                        </div>
-                        <p class="mb-1">Номер: {{info.license_info.license_number}}</p>
-                        <p class="mb-1">Организация выдавшая лицензию: "{{info.license_info.organization}}"</p>
-                        <small class="text-muted">Выдана: {{info.license_info.date.date()}}</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">ФИО руководителя юридического лица</h5>
-                            <small class="text-muted">edit</small>
-                        </div>
-                        <p class="mb-1">{{info.employee_head.employee_FIO}}</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1 ">Наименование СТС НПИ</h5>
-                            <small class="text-muted">edit</small>
-                        </div>
-                        <p class="mb-1">{{info.enter_statement.classification.code}} {{info.enter_statement.classification.code_name}}</p>
-                        <p class="mb-1">{{info.enter_statement.classification.code}} {{info.enter_statement.classification.code_name}}</p>
-                        <p class="mb-1">{{info.enter_statement.classification.code}} {{info.enter_statement.classification.code_name}}</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="{{ url_for('change_expertise') }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Сведения о заключении экспертизы образцов СТС НПИ</h5>
-                            <small class="text-muted">edit</small>
-                        </div>
-                        <p class="mb-1">Адресс: {{info.enter_statement.expertise.address}}</p>
-                        <p class="mb-1">Название организации: {{info.enter_statement.expertise.organization_name}}</p>
-                        <p class="mb-1">Имя эксперта: {{info.enter_statement.expertise.expert_FIO}}</p>
-                        <small class="text-muted">Номер экспертизы {{info.enter_statement.expertise.expertise_number}}</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Юридический и фактический адрес</h5>
-                            <small class="text-muted">edit</small>
-                        </div>
-                        <p class="mb-1">{{info.legal.legal_address}}</p>
-                        <p class="mb-1">{{info.legal.legal_address}}</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Для взаимодействия с ЦЛСЗ ФСБ России выделен</h5>
-                            <small class="text-muted"><font color="green">ok</font> </small>
-                        </div>
-                        <p class="mb-1">{{info.employee.employee_FIO}}</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <p></p>
-                    <button type="button" class="btn ">Primary</button>
-                </div>
-
-
             </div>
         </div>
     </div>
 </div>
-{{info.legal}}
-{{info.contract}}
 {% endblock %}

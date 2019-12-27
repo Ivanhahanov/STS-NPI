@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block content %}
+<div class="container">
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-4">
         <h2>User</h2>
         <table class="table table-hover">
 
@@ -24,35 +25,35 @@
         <table class="table table-hover">
             <tbody>
             {% set legal = info['legal'] %}
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">INN</th>
                 <td>{{ legal.INN}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">Full Name</th>
                 <td>{{ legal.full_name}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">Short Name</th>
                 <td>{{ legal.short_name}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">Company Name</th>
                 <td>{{ legal.company_name}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">OGRN</th>
                 <td>{{ legal.OGRN}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">Legal Address</th>
                 <td>{{ legal.legal_address}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">Real Address</th>
                 <td>{{ legal.real_address}}</td>
             </tr>
-            <tr onclick="window.location='/edit_user';">
+            <tr onclick="window.location='/change_legal';">
                 <th scope="row">License</th>
                 <td>{{ legal.license_number}}</td>
             </tr>
@@ -103,4 +104,5 @@
 <!--    {% set license = info['license']%}-->
 <!--    {{ license.license_number}}<br>-->
 <!--</div>-->
+    </div>
 {% endblock %}

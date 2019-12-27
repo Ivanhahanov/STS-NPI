@@ -10,27 +10,6 @@ import hashlib
 def user_loader(user_id):
     return ClientUser.query.get(user_id)
 
-def reg(form):
-    form = RegForm(obj=form)
-    if request.method == 'POST' and form.validate():
-        if db.session.query(db.exists().where(ClientUser.username == form.username.data)).scalar():
-            flash('Username already exists', 'error')
-        elif db.session.query(db.exists().where(ClientUser.email == form.email.data)).scalar():
-            flash('Email already exists', 'error')
-        else:
-            username = form.username.data
-            password = form.password.data.encode()
-            email = form.email.data
-            salt = username.encode()
-            hashed_password = hashlib.md5(password + salt).hexdigest()
-            print(username, password, hashed_password)
-            user = ClientUser()
-            user.username = username
-            user.email = email
-            user.password_hash = hashed_password
-            db.session.add(user)
-            db.session.commit()
-    return form
 
 @app.route('/login/', methods=['POST', 'GET'])
 def login():
@@ -41,16 +20,17 @@ def login():
         salt = username.encode()
         hashed_password = hashlib.md5(password + salt).hexdigest()
         user = ClientUser.query.filter_by(username=username).first()
-        if username == user.username:
-            print(user.password_hash)
-            if hashed_password == user.password_hash:
-                print(username, password, user.password_hash)
-                login_user(user)
-                session['user_id'] = user.id
-                if username == 'admin':
-                    return redirect('/admin', 302)
-                else:
-                    return redirect('/info', 302)
+        if user is not None:
+            if username == user.username:
+                print(user.password_hash)
+                if hashed_password == user.password_hash:
+                    print(username, password, user.password_hash)
+                    login_user(user)
+                    session['user_id'] = user.id
+                    if username == 'admin':
+                        return redirect('/admin', 302)
+                    else:
+                        return redirect('/statement', 302)
     return render_template('form.html', block_title='Login', form=form)
 
 
@@ -100,11 +80,10 @@ def edit_user():
 
     return render_template('form.html', block_title='Edit User', form=form)
 
-@app.route('/logout')
-@login_required
+@app.route('/logout/')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 @app.route('/head', methods=['POST', 'GET'])
@@ -151,13 +130,8 @@ def legal_data():
     return render_template('form.html', block_title='Register Data', form=form)
 
 
-@app.route('/index')
-@login_required
-def index():
-    return render_template('index.html')
-
-
 @app.route('/contract', methods=['GET', 'POST'])
+@login_required
 def contract():
     form = ContractForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -214,32 +188,40 @@ def contract_info_route(contract_id):
                                appendix_number=len(appendix), addition_number=len(addition))
     return render_template('404.html')
 
+
 @app.route('/add_contract_additions', methods=['POST', 'GET'])
+@login_required
 def add_contract_additions():
     form = AdditionForm(request.form)
     return render_template("form.html", block_title='Add Additions', form=form)
 
+
 @app.route('/add_contract_appendix', methods=['POST', 'GET'])
+@login_required
 def add_contract_appendix():
     form = AppendixForm(request.form)
     return render_template("form.html", block_title='Add Appendix', form=form)
 
+
 @app.route('/statement')
+@login_required
 def statement():
-    info = {'executor': '',
-            'legal': '',
-            'contract': '',
-            'contract_info': '',
-            'license_info': '',
-            'employee_head': '',
-            'employee': '',
-            'enter_statement': '',
+    info = {'executor': {'integrity': False},
+            'legal': {'integrity': False},
+            'contract': {'integrity': False},
+            'contract_info': {'integrity': False},
+            'license_info': {'integrity': False},
+            'employee_head': {'integrity': False},
+            'employee': {'integrity': False},
+            'enter_statement': {'integrity': False},
             }
     user = ClientUser.query.filter_by(id=session['user_id']).first()
     legal = user.legalentity
     if legal is not None:
+        legal.integrety = True
         info['legal'] = legal
         license_info = legal.license
+        print(info['legal'])
         if license_info is not None:
             info['license_info'] = license_info
             contract_info = legal.contract
@@ -258,32 +240,45 @@ def statement():
                             enter_statement = EnterStatement.query.filter_by(legalentity=legal.INN).first()
                             if enter_statement is not None:
                                 info['expertise'] = enter_statement.expertise
-                                enter_statement = EnterStatement.query.filter_by(legalentity=legal.INN).first()
                                 info['enter_statement'] = enter_statement
                                 print(enter_statement.classification.code_name)
 
     return render_template("statement.html", info=info)
 
+
+@app.route('/change_employee', methods=['GET', 'POST'])
+@login_required
+def change_employee():
+    pass
+
 @app.route('/change_legal', methods=['GET', 'POST'])
+@login_required
 def change_legal():
     user = ClientUser.query.filter_by(id=session['user_id']).first()
     legal = user.legalentity
     form = LegalForm(obj=legal)
     if request.method == 'POST' and form.validate():
-        print(form.full_name.data,
+        print(form.INN.data,
+              form.full_name.data,
               form.short_name.data,
               form.company_name.data,
-              form.INN.data,
               form.OGRN.data,
               form.legal_address.data,
               form.real_address.data,
-              form.index.data,
-              form.tax_number.data,
-              form.tax_date.data)
-        return redirect('/head', 302)
+              )
+        legal.INN = form.INN.data
+        legal.full_name = form.full_name.data
+        legal.short_name = form.short_name.data
+        legal.company_name = form.company_name.data
+        legal.OGRN = form.OGRN.data
+        legal.legal_address = form.legal_address.data
+        legal.real_address = form.real_address.data
+        db.session.commit()
+        return redirect('/statement', 302)
     return render_template('form.html', block_title='Edit leglal user', form=form)
 
 @app.route('/change_license', methods=['GET', 'POST'])
+@login_required
 def change_license():
     user = ClientUser.query.filter_by(id=session['user_id']).first()
     legal = user.legalentity
@@ -298,6 +293,7 @@ def change_license():
     return render_template('form.html', block_title='Register License', form=form)
 
 @app.route('/change_expertise', methods=['GET', 'POST'])
+@login_required
 def change_expertise():
     form = ExpertiseForm()
     return render_template('form.html', form=form)
@@ -316,6 +312,7 @@ def change_3():
     return 'change license'
 
 @app.route('/admin_console', methods=['GET', 'POST'])
+@login_required
 def admin_console():
     data = []
     if request.method == 'POST':
@@ -346,3 +343,9 @@ def vulnerability_login():
             return redirect('/admin', 302)
     return render_template('vulnerability_login.html', data=data)
 
+@app.route('/')
+@login_required
+def index():
+    timeline = Timeline.query.all()
+    team = Team.query.all()
+    return render_template('index.html', timeline=timeline, team=team)

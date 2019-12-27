@@ -51,16 +51,13 @@ class LicenseForm(FlaskForm):
     submit = SubmitField("Submit")
 
 class LegalForm(FlaskForm):
-    full_name = StringField('full_name')
-    short_name = StringField('short_name')
-    company_name = StringField('company_name')
-    INN = IntegerField('inn')
-    OGRN = IntegerField('ogrn')
-    legal_address = StringField('legal_address')
-    real_address = StringField('real_address')
-    index = IntegerField('index')
-    tax_number = IntegerField('tax_number')
-    tax_date = DateField('tax_date', format='%m.%d.%Y')
+    full_name = StringField('Full name')
+    short_name = StringField('Short name')
+    company_name = StringField('Company name')
+    INN = IntegerField('INN')
+    OGRN = IntegerField('ORGN')
+    legal_address = StringField('Legal address')
+    real_address = StringField('Real address')
     submit = SubmitField("Submit")
 
 class StatementForm(FlaskForm):
